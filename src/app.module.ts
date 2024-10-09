@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TodoModule } from './app/vaccine/todo.module';
+import { VaccineModule } from './app/vaccine/vaccine.module';
 
 @Module({
   imports: [
@@ -20,7 +20,7 @@ import { TodoModule } from './app/vaccine/todo.module';
         synchronize: true,
       }),
     }),
-    TodoModule,
+    VaccineModule,
   ],
   controllers: [],
   providers: [],

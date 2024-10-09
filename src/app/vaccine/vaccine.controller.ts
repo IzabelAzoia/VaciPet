@@ -15,15 +15,15 @@ import { CreateVaccineDto } from '../domain/vaccine/vaccine.dto';
 import { VaccineService } from './vaccine.service';
 
 @ApiTags('vaccines')
-@Controller('api/v1/vacinas')
+@Controller('api/v1/vaccines')
 export class VaccineController {
   constructor(private readonly vaccineService: VaccineService) {}
 
   @Get()
-  @ApiOperation({ summary: 'Listar todas as vacinas' })
+  @ApiOperation({ summary: 'List all vaccines' })
   @ApiResponse({
     status: 200,
-    description: 'Lista de vacinas retornada com sucesso',
+    description: 'List of vaccines returned successfully',
     type: CreateVaccineDto,
     isArray: true,
   })
@@ -32,30 +32,30 @@ export class VaccineController {
   }
 
   @Post()
-  @ApiOperation({ summary: 'Registrar uma nova vacina' })
-  @ApiResponse({ status: 201, description: 'Vacina registrada com sucesso' })
+  @ApiOperation({ summary: 'Register a new vaccine' })
+  @ApiResponse({ status: 201, description: 'Vaccine registered successfully' })
   async create(@Body() createVaccineDto: CreateVaccineDto) {
     return await this.vaccineService.create(createVaccineDto);
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Exibir os dados de uma vacina' })
+  @ApiOperation({ summary: 'Display the details of a vaccine' })
   @ApiResponse({
     status: 200,
-    description: 'Dados da vacina retornados com sucesso',
+    description: 'Vaccine details returned successfully',
   })
-  @ApiResponse({ status: 404, description: 'Vacina não encontrada' })
+  @ApiResponse({ status: 404, description: 'Vaccine not found' })
   async show(@Param('id', new ParseUUIDPipe()) id: string) {
     return await this.vaccineService.findOneOrFail(id);
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Atualizar o status de uma vacina' })
+  @ApiOperation({ summary: 'Update the status of a vaccine' })
   @ApiResponse({
     status: 200,
-    description: 'Status da vacina atualizado com sucesso',
+    description: 'Vaccine status updated successfully',
   })
-  @ApiResponse({ status: 404, description: 'Vacina não encontrada' })
+  @ApiResponse({ status: 404, description: 'Vaccine not found' })
   async update(
     @Param('id', new ParseUUIDPipe()) id: string,
     @Body() updateVaccineDto: CreateVaccineDto,
@@ -64,9 +64,9 @@ export class VaccineController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Remover uma vacina' })
-  @ApiResponse({ status: 204, description: 'Vacina removida com sucesso' })
-  @ApiResponse({ status: 404, description: 'Vacina não encontrada' })
+  @ApiOperation({ summary: 'Remove a vaccine' })
+  @ApiResponse({ status: 204, description: 'Vaccine removed successfully' })
+  @ApiResponse({ status: 404, description: 'Vaccine not found' })
   @HttpCode(HttpStatus.NO_CONTENT)
   async destroy(@Param('id', new ParseUUIDPipe()) id: string) {
     await this.vaccineService.deleteById(id);

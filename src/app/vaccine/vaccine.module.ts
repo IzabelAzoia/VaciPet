@@ -10,4 +10,4 @@ import { VaccineEntity } from '../domain/vaccine/vaccine.entity';
   providers: [VaccineService],
   exports: [VaccineService],
 })
-export class TodoModule {}
+export class VaccineModule {}

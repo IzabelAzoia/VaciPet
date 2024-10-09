@@ -44,8 +44,9 @@ export class VaccineService {
     await this.vaccineRepository.softDelete(id);
   }
 
-  // Buscar vacinas associadas a um pet
   async getVacinasByPet(petId: string) {
-    return await this.vaccineRepository.find({ where: { pet: petId } });
+    return await this.vaccineRepository.find({
+      where: { pet: { id: petId } }, // Usando um objeto para referenciar o PetEntity
+    });
   }
 }

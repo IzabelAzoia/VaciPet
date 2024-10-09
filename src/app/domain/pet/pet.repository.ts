@@ -1,4 +1,4 @@
-export interface PetRepository {
-  findAll(): Promise<Pet[]>;
-  save(pet: Pet): Promise<Pet>;
-}
+import { Repository } from 'typeorm';
+import { PetEntity } from './pet.entity';
+
+export class PetRepository extends Repository<PetEntity> {}

@@ -3,15 +3,15 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateVaccineDto {
   @IsNotEmpty()
-  @ApiProperty({ description: 'Nome da vacina' })
-  nomeVacina: string;
+  @ApiProperty({ description: 'Vaccine name' })
+  vaccineName: string;
 
   @IsDateString()
-  @ApiProperty({ description: 'Data prevista para a aplicação da vacina' })
-  dataVacina: string;
+  @ApiProperty({ description: 'Expected date for the vaccine application' })
+  vaccineDate: string;
 
   @IsNotEmpty()
-  @IsIn(['Aplicada', 'Não Aplicada'])
-  @ApiProperty({ description: 'Status da aplicação da vacina' })
-  statusAplicacao: string;
+  @IsIn(['Applied', 'Not Applied'])
+  @ApiProperty({ description: 'Status of the vaccine application' })
+  applicationStatus: string;
 }

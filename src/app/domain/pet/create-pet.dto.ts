@@ -2,14 +2,18 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsNotEmpty } from 'class-validator';
 
 export class CreatePetDto {
-  @ApiProperty({ description: 'Nome do pet' })
+  @ApiProperty({ description: 'Pet name' })
   @IsNotEmpty()
   name: string;
 
-  @ApiProperty({ description: 'Tipo de pet (cachorro, gato, etc.)' })
+  @ApiProperty({ description: 'Pet type (dog, cat, etc.)' })
   type: string;
 
-  @ApiProperty({ description: 'Data de nascimento do pet' })
+  @ApiProperty({ description: 'Pet birth date' })
   @IsNotEmpty()
   birthDate: string;
+
+  @ApiProperty({ description: 'Pet breed' }) // Adding description for breed
+  @IsNotEmpty() // Validation for breed
+  breed: string; // New property added
 }

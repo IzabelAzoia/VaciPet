@@ -1,14 +1,6 @@
+import { Injectable } from '@nestjs/common';
+import { Repository } from 'typeorm';
+import { PetEntity } from '../../../domain/pet/pet.entity';
+
 @Injectable()
-export class PetOrmRepository implements PetRepository {
-  constructor(
-    @InjectRepository(PetEntity) private petRepository: Repository<PetEntity>,
-  ) {}
-
-  async findAll(): Promise<Pet[]> {
-    return this.petRepository.find();
-  }
-
-  async save(pet: Pet): Promise<Pet> {
-    return this.petRepository.save(pet);
-  }
-}
+export class PetOrmRepository extends Repository<PetEntity> {}
