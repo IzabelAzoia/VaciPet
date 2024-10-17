@@ -42,7 +42,7 @@ O sistema é voltado para tutores de pets de todas as idades que desejam manter 
 ## Tecnologias utilizadas
 
 | Ferramenta | Descrição                                        |
-| ---------- | ------------------------------------------------ | --- |
+| ---------- | ------------------------------------------------ |
 | NestJS     | Framework para construir aplicativos Node.js     |
 | Node.js    | Ambiente de execução do JavaScript               |
 | TypeScript | Superset do JavaScript que se integra ao Node.js |
@@ -50,8 +50,8 @@ O sistema é voltado para tutores de pets de todas as idades que desejam manter 
 | TypeORM    | Biblioteca para interagir com Postgres           |
 | Swagger    | Framework para gerar a documentação da API       |
 | AWS SNS    | Serviço para envio de notificações push          |
-| AWS S3     | Serviço de armazenamento em nuvem                |     |
-| JWT        | Usado para autenticação e autorização            |     |
+| AWS S3     | Serviço de armazenamento em nuvem                |
+| JWT        | Usado para autenticação e autorização            |
 
 ## Instalação e Execução do Aplicativo
 
