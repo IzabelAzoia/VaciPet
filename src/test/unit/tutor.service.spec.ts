@@ -3,6 +3,7 @@ import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { PetEntity } from '../../app/domain/pet/pet.entity';
 import { PetService } from '../../app/pet/pet.service';
+import { ReminderEntity } from '../../app/domain/reminder/reminder.entity';
 
 describe('PetService', () => {
   let service: PetService;
@@ -13,6 +14,10 @@ describe('PetService', () => {
         PetService,
         {
           provide: getRepositoryToken(PetEntity),
+          useClass: Repository,
+        },
+        {
+          provide: getRepositoryToken(ReminderEntity),
           useClass: Repository,
         },
       ],

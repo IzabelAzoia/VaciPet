@@ -1,3 +1,3 @@
-import { CreateVaccineDto } from './vaccine.dto';
+import { CreateVaccineDto } from './create-vaccine.dto';
 
 export class UpdateVaccineDto extends CreateVaccineDto {}

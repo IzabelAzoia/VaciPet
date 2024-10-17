@@ -1,14 +1,14 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { CreateTutorDto } from '../domain/tutor/create-tutor.dto';
 import { TutorEntity } from '../domain/tutor/tutor.entity';
-import { TutorRepository } from '../domain/tutor/tutor.repository';
+import { Repository } from 'typeorm';
 
 @Injectable()
 export class TutorService {
   constructor(
-    @InjectRepository(TutorRepository)
-    private readonly tutorRepository: TutorRepository,
+    @InjectRepository(TutorEntity)
+    private readonly tutorRepository: Repository<TutorEntity>,
   ) {}
 
   async create(createTutorDto: CreateTutorDto): Promise<TutorEntity> {
@@ -21,7 +21,17 @@ export class TutorService {
   }
 
   async findOne(id: string): Promise<TutorEntity> {
-    return await this.tutorRepository.findOne({ where: { id } });
+    const tutor = await this.tutorRepository.findOne({ where: { id } });
+
+    if (!tutor) {
+      throw new NotFoundException(`Tutor with ID ${id} not found.`);
+    }
+
+    return tutor;
+  }
+
+  async findByEmail(email: string): Promise<TutorEntity | null> {
+    return await this.tutorRepository.findOne({ where: { email } });
   }
 
   async delete(id: string): Promise<void> {

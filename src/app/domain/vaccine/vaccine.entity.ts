@@ -5,8 +5,8 @@ import {
   ManyToOne,
   CreateDateColumn,
   UpdateDateColumn,
-  JoinTable,
   OneToMany,
+  DeleteDateColumn,
 } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { ReminderEntity } from '../reminder/reminder.entity';
@@ -24,7 +24,7 @@ export class VaccineEntity {
 
   @Column()
   @ApiProperty({ description: 'Expected date for application' })
-  vaccineDate: string;
+  vaccineDate: Date;
 
   @Column()
   @ApiProperty({ description: 'Vaccine status: Applied or Not Applied' })
@@ -32,10 +32,9 @@ export class VaccineEntity {
 
   @ManyToOne(() => PetEntity, (pet) => pet.vaccines)
   @ApiProperty({ description: 'Pet receiving the vaccine' })
-  @JoinTable()
   pet: PetEntity;
 
-  @OneToMany(() => ReminderEntity, (reminder) => reminder.vaccine) // Adds the relationship here
+  @OneToMany(() => ReminderEntity, (reminder) => reminder.vaccine)
   @ApiProperty({ description: 'Reminders associated with this vaccine' })
   reminders: ReminderEntity[];
 
@@ -45,6 +44,28 @@ export class VaccineEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @UpdateDateColumn()
-  deletedAt: Date;
+  @DeleteDateColumn()
+  deletedAt: Date | null;
+
+  constructor(
+    id: string,
+    vaccineName: string,
+    vaccineDate: Date,
+    applicationStatus: string,
+    pet: PetEntity,
+    reminders: ReminderEntity[] = [],
+    createdAt: Date,
+    updatedAt: Date,
+    deletedAt: Date | null = null,
+  ) {
+    this.id = id;
+    this.vaccineName = vaccineName;
+    this.vaccineDate = vaccineDate;
+    this.applicationStatus = applicationStatus;
+    this.pet = pet;
+    this.reminders = reminders;
+    this.createdAt = createdAt;
+    this.updatedAt = updatedAt;
+    this.deletedAt = deletedAt;
+  }
 }

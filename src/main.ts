@@ -7,16 +7,17 @@ async function bootstrap() {
   const app = await NestFactory.create(AppModule);
 
   const config = new DocumentBuilder()
-    .setTitle('VaciPet API') // Título da API
+    .setTitle('VaciPet API')
     .setDescription(
-      'API para gerenciar informações sobre pets e serviços relacionados',
+      `API para gerenciar lembretes de vacinas e informações sobre pets, proporcionando uma solução eficiente para o acompanhamento da saúde dos pets.`,
     )
-    .setVersion('1.0') // Versão da API
-    .addTag('pets') // Tag para categorizar as rotas
+    .setVersion('1.0')
+    .addTag('pets')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('swagger', app, document);
+  // O Swagger estará disponível em http://localhost:3000/swagger
 
   app.useGlobalPipes(new ValidationPipe());
   await app.listen(3000);

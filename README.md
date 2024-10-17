@@ -1,73 +1,133 @@
+# Vacipet
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+## Descrição Geral
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+O projeto VaciPet é um sistema que visa ajudar tutores de pets a gerenciar as vacinas de seus animais de estimação. Através de notificações e lembretes automáticos, o VaciPet garante que os tutores se lembrem das datas de vacinação com três dias de antecedência, permitindo uma melhor organização e cuidado com a saúde dos pets.
 
-## Description
+## Contexto
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+Com a crescente preocupação com a saúde e bem-estar dos animais de estimação, muitos tutores enfrentam dificuldades em lembrar as datas das vacinas necessárias, que muitas vezes precisam ser aplicadas em intervalos específicos ao longo do ano. O VaciPet surgiu para solucionar esse problema, centralizando as informações de vacinação e simplificando a gestão das doses e intervalos.
 
-## Installation
+## Público-alvo
 
-```bash
-$ npm install
-```
+O sistema é voltado para tutores de pets de todas as idades que desejam manter a saúde de seus animais em dia. O projeto também é útil para veterinários e clínicas que desejam ajudar seus clientes a gerenciar a vacinação de forma eficiente.
 
-## Running the app
+## Escopo do Projeto
 
-```bash
-# development
-$ npm run start
+### Funcionalidades principais
 
-# watch mode
-$ npm run start:dev
+- **Cadastro de Pets**: Permitir que os tutores criem perfis para seus animais, informando dados como nome, idade e tipo de vacina.
+- **Lembretes Automáticos**: Enviar notificações push aos tutores lembrando-os das vacinas que precisam ser aplicadas, com três dias de antecedência.
+- **Alteração de Dados**: Permitir que os tutores atualizem as informações de seus pets.
+- **Deletar Pets**: Permitir a remoção de registros de pets da base de dados.
+- **Histórico de Vacinação**: Registrar e visualizar o histórico de vacinas aplicadas para cada animal.
 
-# production mode
-$ npm run start:prod
-```
+### Requisitos
 
-## Test
+#### Requisitos Funcionais
 
-```bash
-# unit tests
-$ npm run test
+- O sistema deve permitir o cadastro de pets, incluindo informações como nome, idade, e tipo de vacina.
+- O sistema deve enviar notificações automáticas para os tutores, lembrando sobre a vacinação.
+- O sistema deve permitir a visualização e atualização dos dados dos pets.
+- O sistema deve permitir deletar o cadastro de um pet.
 
-# e2e tests
-$ npm run test:e2e
+#### Requisitos Não Funcionais
 
-# test coverage
-$ npm run test:cov
-```
+- O sistema deve ser intuitivo e fácil de usar, mesmo para pessoas com pouca experiência.
 
-## Support
+## Tecnologias utilizadas
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+| Ferramenta | Descrição                                        |
+| ---------- | ------------------------------------------------ | --- |
+| NestJS     | Framework para construir aplicativos Node.js     |
+| Node.js    | Ambiente de execução do JavaScript               |
+| TypeScript | Superset do JavaScript que se integra ao Node.js |
+| Postgres   | Banco de dados relacional                        |
+| TypeORM    | Biblioteca para interagir com Postgres           |
+| Swagger    | Framework para gerar a documentação da API       |
+| AWS SNS    | Serviço para envio de notificações push          |
+| AWS S3     | Serviço de armazenamento em nuvem                |     |
+| JWT        | Usado para autenticação e autorização            |     |
 
-## Stay in touch
+## Instalação e Execução do Aplicativo
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+Para instalar e executar o VaciPet, siga as instruções abaixo:
+
+1. Clone o repositório:
+
+   ```bash
+   git clone https://github.com/IzabelAzoia/vacipet.git
+   ```
+
+2. Navegue até a pasta do projeto:
+
+   ```bash
+   cd vacipet
+   ```
+
+3. Instale as dependências:
+
+   ```bash
+   npm install
+   ```
+
+4. Para iniciar o aplicativo, use os seguintes comandos:
+
+   - Modo de desenvolvimento:
+
+     ```bash
+     npm run start
+     ```
+
+   - Modo de observação (com recompilação automática):
+
+     ```bash
+     npm run start:dev
+     ```
+
+   - Modo de produção:
+     ```bash
+     npm run start:prod
+     ```
+
+5. Para executar os testes:
+   ```bash
+   npm run test
+   ```
+
+## Rotas
+
+### Pets
+
+- `GET /pets` - Lista todos os pets disponíveis para adoção.
+- `POST /pets` - Cadastra um pet na base de dados.
+- `PUT /pets/:id` - Atualiza os detalhes de um pet.
+- `DELETE /pets/:id` - Remove um pet da base de dados.
+
+### Usuários
+
+- `GET /users` - Lista todos os usuários cadastrados.
+- `POST /users` - Cadastra um novo usuário.
+- `PUT /users/:id` - Atualiza os dados de um usuário.
+- `DELETE /users/:id` - Remove um usuário da base de dados.
+
+## Documentação
+
+A documentação da API pode ser acessada pelo [Swagger](https://.com/home).
+
+## Implementações futuras
+
+- Integração com clínicas veterinárias: Parcerias para que os tutores possam agendar consultas diretamente pelo aplicativo.
+- Relatórios de saúde: Gerar relatórios sobre a saúde dos pets, com histórico de vacinas e consultas.
+- Recursos Educativos: Disponibilizar informações sobre cuidados com pets e a importância da vacinação.
+
+<p align="center">Projeto Final desenvolvido durante a Turma-ON36-ImersãoJS com AWS da <a href="https://reprograma.com.br/">{reprograma}</a></p>
+<p align="center">Feito com 💜 by Maria Izabel Castro Azoia</p>
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Nest é MIT licensed.

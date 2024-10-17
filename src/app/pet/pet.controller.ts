@@ -6,54 +6,81 @@ import {
   Param,
   Put,
   Delete,
+  HttpCode,
+  HttpStatus,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
+import { Express } from 'express';
 import { CreatePetDto } from '../domain/pet/create-pet.dto';
 import { PetService } from './pet.service';
 import { UpdatePetDto } from '../domain/pet/update-pet.dto';
+import { CreateVaccineReminderDto } from '../domain/vaccine-reminder/create-vaccine-reminder.dto';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { PetEntity } from '../domain/pet/pet.entity';
+import { UploadService } from '../upload/upload.service';
 
 @Controller('api/v1/pets')
 export class PetController {
-  constructor(private readonly petService: PetService) {}
+  constructor(
+    private readonly petService: PetService,
+    private readonly uploadService: UploadService,
+  ) {}
 
-  // Fetch all pets
   @Get()
   findAll() {
     return this.petService.findAll();
   }
 
-  // Create a new pet
   @Post()
-  create(@Body() createPetDto: CreatePetDto) {
-    return this.petService.create(createPetDto);
+  @UseInterceptors(FileInterceptor('image'))
+  async createPet(
+    @Body() createPetDto: CreatePetDto,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<PetEntity> {
+    const imageUrl = file
+      ? await this.uploadService.uploadImageToStorage(file)
+      : undefined;
+
+    const newPet = await this.petService.create({
+      ...createPetDto,
+      imageUrl,
+    });
+
+    return newPet;
   }
 
-  // Fetch a specific pet by ID
   @Get(':id')
   findOne(@Param('id') id: string) {
     return this.petService.findOne(id);
   }
 
-  // Update an existing pet
   @Put(':id')
   update(@Param('id') id: string, @Body() updatePetDto: UpdatePetDto) {
     return this.petService.update(id, updatePetDto);
   }
 
-  // Delete a pet
   @Delete(':id')
   remove(@Param('id') id: string) {
     return this.petService.remove(id);
   }
 
-  // Fetch all vaccines associated with a pet
   @Get(':id/vaccines')
   getVaccinesForPet(@Param('id') id: string) {
     return this.petService.getVaccinesForPet(id);
   }
 
-  // Fetch all reminders associated with a pet
   @Get(':id/reminders')
   getRemindersForPet(@Param('id') id: string) {
     return this.petService.getRemindersForPet(id);
+  }
+
+  @Post(':id/vaccines/reminders')
+  @HttpCode(HttpStatus.CREATED)
+  createVaccineReminder(
+    @Param('id') id: string,
+    @Body() createVaccineReminderDto: CreateVaccineReminderDto,
+  ) {
+    return this.petService.createVaccineReminder(id, createVaccineReminderDto);
   }
 }

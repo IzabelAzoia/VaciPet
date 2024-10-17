@@ -11,7 +11,7 @@ import {
   ParseUUIDPipe,
 } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
-import { CreateVaccineDto } from '../domain/vaccine/vaccine.dto';
+import { CreateVaccineDto } from '../domain/vaccine/create-vaccine.dto';
 import { VaccineService } from './vaccine.service';
 
 @ApiTags('vaccines')

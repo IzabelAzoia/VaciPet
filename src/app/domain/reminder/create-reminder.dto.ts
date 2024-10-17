@@ -20,4 +20,10 @@ export class CreateReminderDto {
   @IsString()
   @ApiProperty({ description: 'Status of the reminder (default is "pending")' })
   status?: string;
+
+  constructor(description: string, reminderDate: Date, tutorId: string) {
+    this.description = description;
+    this.reminderDate = reminderDate;
+    this.tutorId = tutorId;
+  }
 }

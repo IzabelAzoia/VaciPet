@@ -5,47 +5,102 @@ import {
   OneToMany,
   CreateDateColumn,
   UpdateDateColumn,
+  DeleteDateColumn,
+  ManyToOne,
 } from 'typeorm';
 import { ReminderEntity } from '../reminder/reminder.entity';
 import { VaccineEntity } from '../vaccine/vaccine.entity';
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString, IsNotEmpty, IsDate } from 'class-validator';
+import { TutorEntity } from '../tutor/tutor.entity';
 
-import { ApiProperty } from '@nestjs/swagger'; // Importando o ApiProperty
-
-@Entity({ name: 'pets' }) // Defines the name of the table in the database
+@Entity({ name: 'pets' })
 export class PetEntity {
   @PrimaryGeneratedColumn('uuid')
-  @ApiProperty() // Added for documentation
-  public id: string;
+  @ApiProperty()
+  id!: string;
 
   @Column()
-  @ApiProperty({ description: 'Name of the pet' }) // Description for Swagger
-  public name: string;
+  @ApiProperty({ description: 'Name of the pet' })
+  @IsString()
+  @IsNotEmpty()
+  name: string;
 
   @Column()
-  @ApiProperty({ description: 'Type of pet (e.g., cat, dog)' }) // Description
-  public type: string;
+  @ApiProperty({ description: 'Type of pet (e.g., cat, dog)' })
+  @IsString()
+  @IsNotEmpty()
+  type: string;
 
   @Column()
-  @ApiProperty({ description: 'Birth date of the pet' }) // Description
-  public birthDate: Date; // Corrected to Date
+  @ApiProperty({ description: 'Birth date of the pet' })
+  @IsDate()
+  @IsNotEmpty()
+  birthDate: Date;
 
   @Column()
-  @ApiProperty({ description: 'Breed of the pet' }) // Description
-  public breed: string;
+  @ApiProperty({ description: 'Breed of the pet' })
+  @IsString()
+  @IsNotEmpty()
+  breed: string;
+
+  @Column({ nullable: true }) // Campo para armazenar a imagem
+  @ApiProperty({ description: 'Image URL of the pet' })
+  imageUrl?: string;
 
   @CreateDateColumn()
-  @ApiProperty({ description: 'Creation date of the record' }) // Description
+  @ApiProperty({ description: 'Creation date of the record' })
   createdAt: Date;
 
   @UpdateDateColumn()
-  @ApiProperty({ description: 'Date of the last update of the record' }) // Description
+  @ApiProperty({ description: 'Date of the last update of the record' })
   updatedAt: Date;
 
+  @DeleteDateColumn({ nullable: true })
+  @ApiProperty({ description: 'Date when the record was deleted' })
+  deletedAt: Date | null;
+
   @OneToMany(() => ReminderEntity, (reminder) => reminder.pet)
-  @ApiProperty({ type: () => ReminderEntity, isArray: true }) // Documenting the relationship
-  public reminders: ReminderEntity[];
+  @ApiProperty({
+    type: () => ReminderEntity,
+    isArray: true,
+    description: 'Reminders associated with the pet',
+  })
+  reminders: ReminderEntity[];
 
   @OneToMany(() => VaccineEntity, (vaccine) => vaccine.pet)
-  @ApiProperty({ type: () => VaccineEntity, isArray: true }) // Documenting the relationship
-  public vaccines: VaccineEntity[];
+  @ApiProperty({
+    type: () => VaccineEntity,
+    isArray: true,
+    description: 'Vaccines associated with the pet',
+  })
+  vaccines: VaccineEntity[];
+
+  @ManyToOne(() => TutorEntity, (tutor) => tutor.pets, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
+  @ApiProperty({ description: 'Tutor associated with the pet' })
+  tutor: TutorEntity;
+
+  constructor(
+    name: string,
+    type: string,
+    birthDate: Date,
+    breed: string,
+    tutor: TutorEntity,
+    imageUrl?: string,
+  ) {
+    this.name = name;
+    this.type = type;
+    this.birthDate = birthDate;
+    this.breed = breed;
+    this.imageUrl = imageUrl;
+    this.createdAt = new Date();
+    this.updatedAt = new Date();
+    this.deletedAt = null;
+    this.reminders = [];
+    this.vaccines = [];
+    this.tutor = tutor;
+  }
 }

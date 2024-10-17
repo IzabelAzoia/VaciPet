@@ -8,10 +8,20 @@ export class CreateVaccineDto {
 
   @IsDateString()
   @ApiProperty({ description: 'Expected date for the vaccine application' })
-  vaccineDate: string;
+  vaccineDate: Date;
 
   @IsNotEmpty()
   @IsIn(['Applied', 'Not Applied'])
   @ApiProperty({ description: 'Status of the vaccine application' })
   applicationStatus: string;
+
+  constructor(
+    vaccineName: string,
+    vaccineDate: Date,
+    applicationStatus: string,
+  ) {
+    this.vaccineName = vaccineName;
+    this.vaccineDate = vaccineDate;
+    this.applicationStatus = applicationStatus;
+  }
 }
