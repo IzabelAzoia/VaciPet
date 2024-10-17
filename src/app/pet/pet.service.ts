@@ -18,6 +18,14 @@ export class PetService {
     private readonly reminderRepository: Repository<ReminderEntity>,
   ) {}
 
+  async findPetById(petId: string): Promise<PetEntity> {
+    const pet = await this.petRepository.findOne({ where: { id: petId } });
+    if (!pet) {
+      throw new NotFoundException('Pet not found');
+    }
+    return pet;
+  }
+
   async findAll(): Promise<PetEntity[]> {
     return await this.petRepository.find();
   }
@@ -28,11 +36,7 @@ export class PetService {
   }
 
   async findOne(id: string): Promise<PetEntity> {
-    const pet = await this.petRepository.findOne({ where: { id } });
-    if (!pet) {
-      throw new NotFoundException('Pet not found');
-    }
-    return pet;
+    return await this.findPetById(id); // Reutilizando o método para evitar duplicação de código
   }
 
   async update(id: string, updatePetDto: UpdatePetDto): Promise<PetEntity> {
@@ -52,38 +56,20 @@ export class PetService {
   }
 
   async getVaccinesForPet(id: string) {
-    const pet = await this.petRepository.findOne({
-      where: { id },
-      relations: ['vaccines'],
-    });
-    if (!pet) {
-      throw new NotFoundException('Pet not found');
-    }
-    return pet.vaccines;
+    const pet = await this.findPetById(id);
+    return pet.vaccines; // Retorna as vacinas do pet
   }
 
   async getRemindersForPet(id: string) {
-    const pet = await this.petRepository.findOne({
-      where: { id },
-      relations: ['reminders'],
-    });
-    if (!pet) {
-      throw new NotFoundException('Pet not found');
-    }
-    return pet.reminders;
+    const pet = await this.findPetById(id);
+    return pet.reminders; // Retorna os lembretes do pet
   }
 
   async createVaccineReminder(
     petId: string,
     createVaccineReminderDto: CreateVaccineReminderDto,
   ): Promise<ReminderEntity> {
-    const pet = await this.petRepository.findOne({
-      where: { id: petId },
-      relations: ['tutor'],
-    });
-    if (!pet) {
-      throw new NotFoundException('Pet not found');
-    }
+    const pet = await this.findPetById(petId); // Usa o método que já existe para encontrar o pet
 
     const vaccineReminder = new VaccineReminderEntity(
       createVaccineReminderDto.doses,
@@ -100,21 +86,6 @@ export class PetService {
       pet,
       createVaccineReminderDto.intervalBetweenDoses,
     );
-
-    vaccineReminder.reminderDate = new Date(
-      createVaccineReminderDto.reminderDate,
-    );
-    vaccineReminder.description = createVaccineReminderDto.description;
-    vaccineReminder.status = createVaccineReminderDto.status;
-
-    vaccineReminder.vaccineName = createVaccineReminderDto.vaccineName;
-    vaccineReminder.vaccineDate = new Date(
-      createVaccineReminderDto.vaccineDate,
-    );
-    vaccineReminder.applicationStatus =
-      createVaccineReminderDto.applicationStatus;
-
-    vaccineReminder.pet = pet;
 
     return await this.reminderRepository.save(vaccineReminder);
   }

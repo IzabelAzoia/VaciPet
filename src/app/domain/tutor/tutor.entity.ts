@@ -70,11 +70,11 @@ export class TutorEntity {
 
   constructor(
     name: string,
-    pets: PetEntity[],
     email: string,
     phone: string,
     password: string,
     reminders: ReminderEntity[] = [],
+    pets: PetEntity[],
     createdAt?: Date,
     updatedAt?: Date,
   ) {

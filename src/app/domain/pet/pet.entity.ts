@@ -88,8 +88,8 @@ export class PetEntity {
     type: string,
     birthDate: Date,
     breed: string,
+    imageUrl: string,
     tutor: TutorEntity,
-    imageUrl?: string,
   ) {
     this.name = name;
     this.type = type;

@@ -23,9 +23,45 @@ describe('VaccineReminderService', () => {
     it('should create a vaccine reminder', async () => {
       const firstDoseDate = new Date();
       const reminderDate = new Date();
-      const tutor = new TutorEntity();
-      const vaccine = new VaccineEntity();
-      const pet = new PetEntity();
+
+      // Criando um TutorEntity com parâmetros necessários
+      const tutor = new TutorEntity(
+        'Tutor Name', // name
+        'tutor@example.com', // email
+        '123456789', // phone
+        'hashedpassword', // password
+        [], // reminders
+        [], // pets
+      );
+
+      // Criando um VaccineEntity com parâmetros necessários
+      const vaccine = new VaccineEntity(
+        'vaccine-id', // id
+        'Flu Shot', // vaccineName
+        firstDoseDate, // vaccineDate
+        'pending', // applicationStatus
+        new PetEntity( // pet (deve ser uma instância de PetEntity)
+          'Buddy', // name
+          'Dog', // type
+          new Date('2020-01-01'), // birthDate
+          'Labrador', // breed
+          'image-url', // imageUrl
+          tutor, // tutor (associando o tutor)
+        ),
+        [], // reminders
+        new Date(), // createdAt
+        new Date(), // updatedAt
+      );
+
+      // Criando uma instância de PetEntity (opcional, já está no VaccineEntity)
+      const pet = new PetEntity(
+        'Buddy',
+        'Dog',
+        new Date('2020-01-01'),
+        'Labrador',
+        'image-url',
+        tutor,
+      );
 
       const result = await service.createReminder(
         'Flu Shot',

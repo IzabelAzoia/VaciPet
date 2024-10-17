@@ -4,6 +4,18 @@ import { ApiProperty } from '@nestjs/swagger';
 export class CreateReminderDto {
   @IsNotEmpty()
   @IsString()
+  @ApiProperty({ description: 'ID of the pet associated with the reminder' })
+  petId: string; // Adicionando petId como propriedade
+
+  @IsNotEmpty()
+  @IsString()
+  @ApiProperty({
+    description: 'ID of the vaccine associated with the reminder',
+  })
+  vaccineId: string; // Adicionando vaccineId como propriedade
+
+  @IsNotEmpty()
+  @IsString()
   @ApiProperty({ description: 'Reminder description' })
   description: string;
 
@@ -21,9 +33,19 @@ export class CreateReminderDto {
   @ApiProperty({ description: 'Status of the reminder (default is "pending")' })
   status?: string;
 
-  constructor(description: string, reminderDate: Date, tutorId: string) {
+  constructor(
+    petId: string,
+    vaccineId: string,
+    description: string,
+    reminderDate: Date,
+    tutorId: string,
+    status?: string,
+  ) {
+    this.petId = petId; // Atribuindo petId no construtor
+    this.vaccineId = vaccineId; // Atribuindo vaccineId no construtor
     this.description = description;
     this.reminderDate = reminderDate;
     this.tutorId = tutorId;
+    this.status = status || 'pending'; // Definindo um valor padrão para status
   }
 }

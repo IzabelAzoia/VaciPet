@@ -8,6 +8,7 @@ import {
   IsNumber,
 } from 'class-validator';
 import { VaccineEntity } from '../vaccine/vaccine.entity';
+import { TutorEntity } from '../tutor/tutor.entity';
 
 export class CreateVaccineReminderDto {
   @ApiProperty({ description: 'Nome da vacina' })
@@ -60,8 +61,13 @@ export class CreateVaccineReminderDto {
   @IsNumber()
   intervalBetweenDoses?: number;
 
+  @ApiProperty({ description: 'Entidade da vacina' })
   @IsNotEmpty()
   vaccine: VaccineEntity;
+
+  @ApiProperty({ description: 'Entidade do tutor que receberá o lembrete' })
+  @IsNotEmpty()
+  tutor: TutorEntity; // Aqui você pode usar TutorEntity ou uma referência ao ID do tutor
 
   constructor(
     vaccineName: string,
@@ -74,6 +80,7 @@ export class CreateVaccineReminderDto {
     firstDoseDate: Date,
     name: string,
     vaccine: VaccineEntity,
+    tutor: TutorEntity, // Incluindo tutor no construtor
     intervalBetweenDoses?: number,
   ) {
     this.vaccineName = vaccineName;
@@ -86,6 +93,7 @@ export class CreateVaccineReminderDto {
     this.firstDoseDate = firstDoseDate;
     this.name = name;
     this.vaccine = vaccine;
+    this.tutor = tutor; // Atribuindo tutor
     this.intervalBetweenDoses = intervalBetweenDoses;
   }
 }

@@ -10,7 +10,7 @@ export class VaccineService {
 
   constructor(
     @InjectRepository(VaccineEntity)
-    private vaccineRepository: Repository<VaccineEntity>,
+    private readonly vaccineRepository: Repository<VaccineEntity>,
   ) {}
 
   async create(createVaccineDto: CreateVaccineDto): Promise<VaccineEntity> {
@@ -18,11 +18,10 @@ export class VaccineService {
       const vaccine = this.vaccineRepository.create(createVaccineDto);
       return await this.vaccineRepository.save(vaccine);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error('Erro ao criar vacina', error.stack);
-      } else {
-        this.logger.error('Erro ao criar vacina', 'Erro desconhecido');
-      }
+      this.logger.error(
+        'Erro ao criar vacina',
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new Error('Erro ao criar vacina.');
     }
   }
@@ -33,26 +32,12 @@ export class VaccineService {
   ): Promise<VaccineEntity> {
     try {
       await this.vaccineRepository.update(id, updateVaccineDto);
-      const updatedVaccine = await this.vaccineRepository.findOne({
-        where: { id },
-      });
-
-      if (!updatedVaccine) {
-        throw new NotFoundException(
-          `Vacina com ID ${id} não encontrada após a atualização.`,
-        );
-      }
-
-      return updatedVaccine;
+      return await this.findOneOrFail(id); // Usa o novo método aqui
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error(`Erro ao atualizar vacina com ID ${id}`, error.stack);
-      } else {
-        this.logger.error(
-          `Erro ao atualizar vacina com ID ${id}`,
-          'Erro desconhecido',
-        );
-      }
+      this.logger.error(
+        `Erro ao atualizar vacina com ID ${id}`,
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new Error(`Erro ao atualizar vacina com ID ${id}.`);
     }
   }
@@ -61,11 +46,10 @@ export class VaccineService {
     try {
       return await this.vaccineRepository.find();
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error('Erro ao buscar vacinas', error.stack);
-      } else {
-        this.logger.error('Erro ao buscar vacinas', 'Erro desconhecido');
-      }
+      this.logger.error(
+        'Erro ao buscar vacinas',
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new Error('Erro ao buscar vacinas.');
     }
   }
@@ -74,31 +58,23 @@ export class VaccineService {
     try {
       return await this.vaccineRepository.findOneOrFail({ where: { id } });
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error(`Vacina com ID ${id} não encontrada`, error.stack);
-      } else {
-        this.logger.error(
-          `Vacina com ID ${id} não encontrada`,
-          'Erro desconhecido',
-        );
-      }
+      this.logger.error(
+        `Vacina com ID ${id} não encontrada`,
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new NotFoundException(`Vacina com ID ${id} não encontrada.`);
     }
   }
 
   async deleteById(id: string): Promise<void> {
     try {
-      await this.findOneOrFail(id);
+      await this.findOneOrFail(id); // Verifica se a vacina existe antes de tentar deletar
       await this.vaccineRepository.softDelete(id);
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error(`Erro ao deletar vacina com ID ${id}`, error.stack);
-      } else {
-        this.logger.error(
-          `Erro ao deletar vacina com ID ${id}`,
-          'Erro desconhecido',
-        );
-      }
+      this.logger.error(
+        `Erro ao deletar vacina com ID ${id}`,
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new Error(`Erro ao deletar vacina com ID ${id}.`);
     }
   }
@@ -109,17 +85,10 @@ export class VaccineService {
         where: { pet: { id: petId } },
       });
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.error(
-          `Erro ao buscar vacinas para o pet com ID ${petId}`,
-          error.stack,
-        );
-      } else {
-        this.logger.error(
-          `Erro ao buscar vacinas para o pet com ID ${petId}`,
-          'Erro desconhecido',
-        );
-      }
+      this.logger.error(
+        `Erro ao buscar vacinas para o pet com ID ${petId}`,
+        error instanceof Error ? error.stack : 'Erro desconhecido',
+      );
       throw new Error(`Erro ao buscar vacinas para o pet com ID ${petId}.`);
     }
   }
