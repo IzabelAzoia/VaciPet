@@ -13,12 +13,11 @@ export class ReminderService {
     @InjectRepository(ReminderEntity)
     private readonly reminderRepository: Repository<ReminderEntity>,
 
-    private readonly petService: PetService, // Injetando o PetService
-    private readonly vaccineService: VaccineService, // Injetando o VaccineService
+    private readonly petService: PetService,
+    private readonly vaccineService: VaccineService,
   ) {}
 
   async create(createReminderDto: CreateReminderDto): Promise<ReminderEntity> {
-    // Obtenha o pet e a vacina com base nos IDs fornecidos no DTO
     const pet = await this.petService.findPetById(createReminderDto.petId);
     const vaccine = await this.vaccineService.findOneOrFail(
       createReminderDto.vaccineId,
@@ -30,11 +29,11 @@ export class ReminderService {
       status: createReminderDto.status || 'pending',
       tutor: { id: createReminderDto.tutorId } as TutorEntity,
       pet: {
-        ...pet, // Inclua as informações do pet
+        ...pet,
       },
       vaccine: {
-        ...vaccine, // Inclua as informações da vacina
-        applicationStatus: vaccine.applicationStatus || 'Not Applied', // Exemplo de status padrão
+        ...vaccine,
+        applicationStatus: vaccine.applicationStatus || 'Not Applied',
       },
     });
 

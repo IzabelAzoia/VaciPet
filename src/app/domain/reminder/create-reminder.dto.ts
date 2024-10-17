@@ -41,11 +41,11 @@ export class CreateReminderDto {
     tutorId: string,
     status?: string,
   ) {
-    this.petId = petId; // Atribuindo petId no construtor
-    this.vaccineId = vaccineId; // Atribuindo vaccineId no construtor
+    this.petId = petId;
+    this.vaccineId = vaccineId;
     this.description = description;
     this.reminderDate = reminderDate;
     this.tutorId = tutorId;
-    this.status = status || 'pending'; // Definindo um valor padrão para status
+    this.status = status || 'pending';
   }
 }

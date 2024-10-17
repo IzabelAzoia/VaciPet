@@ -36,7 +36,7 @@ export class PetService {
   }
 
   async findOne(id: string): Promise<PetEntity> {
-    return await this.findPetById(id); // Reutilizando o método para evitar duplicação de código
+    return await this.findPetById(id);
   }
 
   async update(id: string, updatePetDto: UpdatePetDto): Promise<PetEntity> {
@@ -57,19 +57,19 @@ export class PetService {
 
   async getVaccinesForPet(id: string) {
     const pet = await this.findPetById(id);
-    return pet.vaccines; // Retorna as vacinas do pet
+    return pet.vaccines;
   }
 
   async getRemindersForPet(id: string) {
     const pet = await this.findPetById(id);
-    return pet.reminders; // Retorna os lembretes do pet
+    return pet.reminders;
   }
 
   async createVaccineReminder(
     petId: string,
     createVaccineReminderDto: CreateVaccineReminderDto,
   ): Promise<ReminderEntity> {
-    const pet = await this.findPetById(petId); // Usa o método que já existe para encontrar o pet
+    const pet = await this.findPetById(petId);
 
     const vaccineReminder = new VaccineReminderEntity(
       createVaccineReminderDto.doses,

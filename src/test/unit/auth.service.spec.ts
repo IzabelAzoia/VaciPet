@@ -42,7 +42,7 @@ describe('AuthService', () => {
         name: 'Test Tutor',
         phone: '1234567890',
         reminders: [],
-        pets: [], // Adicionando a propriedade 'pets'
+        pets: [],
         createdAt: new Date(),
         updatedAt: new Date(),
       };
@@ -103,6 +103,4 @@ describe('AuthService', () => {
       expect(result).toEqual({ access_token: 'token' });
     });
   });
-
-  // O teste de registro de tutor foi removido
 });

@@ -44,7 +44,7 @@ export class PetEntity {
   @IsNotEmpty()
   breed: string;
 
-  @Column({ nullable: true }) // Campo para armazenar a imagem
+  @Column({ nullable: true })
   @ApiProperty({ description: 'Image URL of the pet' })
   imageUrl?: string;
 

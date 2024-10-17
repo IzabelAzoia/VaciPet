@@ -32,7 +32,7 @@ export class VaccineService {
   ): Promise<VaccineEntity> {
     try {
       await this.vaccineRepository.update(id, updateVaccineDto);
-      return await this.findOneOrFail(id); // Usa o novo método aqui
+      return await this.findOneOrFail(id);
     } catch (error: unknown) {
       this.logger.error(
         `Erro ao atualizar vacina com ID ${id}`,
@@ -68,7 +68,7 @@ export class VaccineService {
 
   async deleteById(id: string): Promise<void> {
     try {
-      await this.findOneOrFail(id); // Verifica se a vacina existe antes de tentar deletar
+      await this.findOneOrFail(id);
       await this.vaccineRepository.softDelete(id);
     } catch (error: unknown) {
       this.logger.error(

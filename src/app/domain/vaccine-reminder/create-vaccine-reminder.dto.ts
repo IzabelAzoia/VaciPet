@@ -67,7 +67,7 @@ export class CreateVaccineReminderDto {
 
   @ApiProperty({ description: 'Entidade do tutor que receberá o lembrete' })
   @IsNotEmpty()
-  tutor: TutorEntity; // Aqui você pode usar TutorEntity ou uma referência ao ID do tutor
+  tutor: TutorEntity;
 
   constructor(
     vaccineName: string,
@@ -80,7 +80,7 @@ export class CreateVaccineReminderDto {
     firstDoseDate: Date,
     name: string,
     vaccine: VaccineEntity,
-    tutor: TutorEntity, // Incluindo tutor no construtor
+    tutor: TutorEntity,
     intervalBetweenDoses?: number,
   ) {
     this.vaccineName = vaccineName;
@@ -93,7 +93,7 @@ export class CreateVaccineReminderDto {
     this.firstDoseDate = firstDoseDate;
     this.name = name;
     this.vaccine = vaccine;
-    this.tutor = tutor; // Atribuindo tutor
+    this.tutor = tutor;
     this.intervalBetweenDoses = intervalBetweenDoses;
   }
 }
