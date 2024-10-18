@@ -6,15 +6,15 @@ import { VaccineReminderEntity } from '../domain/vaccine-reminder/vaccine-remind
 import { PetEntity } from '../domain/pet/pet.entity';
 import { TutorEntity } from '../domain/tutor/tutor.entity';
 import { VaccineEntity } from '../domain/vaccine/vaccine.entity';
-import { sendPushNotification } from '../notifications/sns-service';
+import { MockSnsService } from './mock-sns.service';
 @Injectable()
 export class VaccineReminderService {
-  private vaccineRepository: any;
+  private vaccineRepository: any; // Substitua por um repositório adequado
+  private snsService = new MockSnsService();
 
-  @Cron('0 0 * * *')
+  @Cron('0 0 * * *') // Executa diariamente à meia-noite
   async handleReminders() {
-    const today = new Date();
-
+    const today = new Date().toISOString().slice(0, 10); // Formata para YYYY-MM-DD
     const vaccinesDueToday = await this.vaccineRepository.find({
       where: { nextDoseDate: today },
     });
@@ -29,7 +29,7 @@ export class VaccineReminderService {
     const targetArn = 'ARN_DO_DISPOSITIVO';
 
     try {
-      await sendPushNotification(message, targetArn);
+      await this.snsService.publish(message, targetArn);
       console.log(`Notificação enviada para a vacina: ${vaccine.name}`);
     } catch (error) {
       console.error(

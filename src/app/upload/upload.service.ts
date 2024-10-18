@@ -15,6 +15,10 @@ export class UploadService {
     const accessKeyId = process.env.AWS_ACCESS_KEY_ID;
     const secretAccessKey = process.env.AWS_SECRET_ACCESS_KEY;
 
+    console.log('AWS_REGION:', region);
+    console.log('AWS_ACCESS_KEY_ID:', accessKeyId);
+    console.log('AWS_SECRET_ACCESS_KEY:', secretAccessKey);
+
     if (!region || !accessKeyId || !secretAccessKey) {
       throw new Error('AWS credentials and region must be provided.');
     }
@@ -36,7 +40,7 @@ export class UploadService {
       Key: `pets/${Date.now()}_${file.originalname}`,
       Body: file.buffer,
       ContentType: file.mimetype,
-      ACL: ObjectCannedACL.public_read,
+      ACL: ObjectCannedACL.public_read, // Corrigido para PublicRead
     };
 
     try {

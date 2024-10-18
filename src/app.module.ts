@@ -18,8 +18,8 @@ import { TaskService } from './app/task/task.service';
       inject: [ConfigService],
       useFactory: (configService: ConfigService) => ({
         type: 'postgres',
-        host: configService.get('DB_HOST', 'localhost'),
-        port: Number(configService.get('DB_PORT', 5432)),
+        host: configService.get('DB_HOST', '44.197.222.103'),
+        port: Number(configService.get('DB_PORT', 3000)),
         username: configService.get('DB_USERNAME', 'postgres'),
         password: configService.get('DB_PASSWORD', 'rootpassword'),
         database: configService.get('DB_DATABASE', 'todo'),
